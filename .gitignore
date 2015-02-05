@@ -1,0 +1,26 @@
+#ignore patterns
+*_bak
+*.pyc
+*.pyd
+*.pyo
+*.lnk
+*.ppm
+*.bat
+*.pdn
+
+#specific files/folders:
+get fps for flipnotes
+hatenafetch
+compile.py
+tile.png
+Untitled.png
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
