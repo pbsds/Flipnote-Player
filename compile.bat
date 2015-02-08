@@ -1,4 +1,4 @@
-pyinstaller --onefile -n "Flipnote Player" --console "Flipnote Player.py"
+pyinstaller --icon=icon.ico --onefile -n "Flipnote Player" --noconsole "Flipnote Player.py"
 move "dist\Flipnote Player.exe" "Flipnote Player.exe"
 rmdir dist
 move "build\Flipnote Player\warnFlipnote Player.txt" "warnFlipnote Player.txt"

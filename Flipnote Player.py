@@ -105,6 +105,7 @@ class player:
 		pygame.mixer.pre_init(44100, buffer=512)#lower the buffer to avoid latency
 		pygame.init()
 		pygame.font.init()
+		pygame.display.set_icon(pygame.image.load("graphics/icon.png"))
 		pygame.display.set_caption("Flipnote Player - by pbsds")
 		self.window = pygame.display.set_mode((544, 550), pygame.DOUBLEBUF)
 		self.browserS = pygame.surface.Surface((512, 384)).convert()
