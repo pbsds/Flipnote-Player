@@ -13,7 +13,8 @@ directly from hatena private servers like sudomemo. Possibly from the real Haten
 --DEPENDENCIES--
 Hatenatools: https://github.com/pbsds/Hatenatools, which is included
 PIL, pygame, numpy and scikits.samplerate
-Tested and written in python 2.7.3
+Under windows: pywin32
+Written and tested with python 2.7.3 on Windows 8.1
 
 --LICENSE--
 Flipnote Player is licensed under AGPL3

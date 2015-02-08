@@ -5,18 +5,16 @@
 *.pyo
 *.lnk
 *.ppm
-*.bat
+#*.bat
 *.pdn
 
 #specific files/folders:
 get fps for flipnotes
 hatenafetch
-compile.py
 tile.png
 Untitled.png
 
 # OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*

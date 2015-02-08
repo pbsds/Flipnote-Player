@@ -232,7 +232,7 @@ def ReadImage(path):#TODO: make it support numpy
 if __name__ == "__main__":
 	print "              ==      NTFT.py     =="
 	print "             ==      by pbsds      =="
-	print "              ==       v0.90      =="
+	print "              ==       v0.95      =="
 	print
 	
 	if not hasPIL:
