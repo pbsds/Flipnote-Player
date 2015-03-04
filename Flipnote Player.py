@@ -13,8 +13,11 @@ if "win" in sys.platform:
 		bitmask = windll.kernel32.GetLogicalDrives()
 		for i, letter in enumerate(map(chr, xrange(ord("A"), ord("Z")+1))):
 			if bitmask & (1<<i):
-				if DEBUG: print "win32api:", win32api.GetVolumeInformation("%s:\\" % letter)
-				label = win32api.GetVolumeInformation("%s:\\" % letter)[0]
+				try:
+					label = win32api.GetVolumeInformation("%s:\\" % letter)[0]
+				except Exception as i:
+					print "win32api error:", i
+				if DEBUG: print "win32api:", letter
 				yield letter, label
 else:
 	def GetDriveNames():
@@ -766,5 +769,21 @@ def main():
 	
 	program.save()
 
-if __name__ == "__main__":
+def excepthook(type, value, traceb):
+	import traceback
+	class dummy:
+		buff = ""
+		def write(self, data):
+			self.buff += data
+	
+	dummyf = dummy()
+	traceback.print_exception(type, value, traceb, file=dummyf)
+	f = open("error.txt", "w")
+	f.write(dummyf.buff)
+	f.close()
+	print dummyf.buff
+	print "Error message written to error.txt"
+	sys.exit()
+if(__name__ == '__main__'):
+	sys.excepthook = excepthook
 	main()
