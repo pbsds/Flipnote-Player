@@ -2,7 +2,7 @@
 
 DEBUG = False
 
-import pygame, sys, numpy as np, ConfigParser, time, os, glob, urllib2
+import pygame, sys, numpy as np, ConfigParser, time, os, glob, urllib2, random
 from scikits.samplerate import resample as SciResample
 from Hatenatools import PPM, UGO, NTFT
 
@@ -651,14 +651,14 @@ class player:
 				
 				dataNP = np.fromstring(data, dtype=np.int16)
 				ratio =  1. / 8192.*44100. / self.speed2period[self.ppm.BGMFramespeed] * self.speed2period[self.ppm.Framespeed]
-				#newsize =  float(datanp.shape[0]) * ratio
+				#newsize =  float(dataNP.shape[0]) * ratio
 				
-				if DEBUG: print datanp.shape[0], "to", newsize, "@", ratio
+				if DEBUG: print dataNP.shape[0], "to", float(dataNP.shape[0]) * ratio, "@", ratio
 				
 				resampled = SciResample(dataNP, ratio, "sinc_fastest")#dtype here is now float32
 				
 				#scale down again:
-				resampled = resampled*(float(dataNP.max())/float(resampled.max()))
+				resampled = resampled * (float(dataNP.max())/float(resampled.max()))
 				
 				#convert to sterio and pass to pygame:
 				stereo = np.zeros((resampled.shape[0],2), dtype=np.int16)
@@ -725,8 +725,14 @@ class player:
 	def FetchHatena(self, addr):
 		if DEBUG: print "hatenafetch:", addr
 		
-		request = urllib2.Request(addr)
-		request.add_header('x-dsi-sid', 'pbsds\' flipnote player')
+		#sudomemo fix. Sudomemo blocks requests with user-agents and requires each session to have a unique SID
+		if addr == "http://flipnote.hatena.com/ds/v2-eu/index.ugo":
+			self.SID = 'pbsdsFlipnotePlayer%s' % "".join((chr(random.randrange(ord("A"), ord("Z")+1) + random.choice((0, ord("a")-ord("A")))) for _ in xrange(21)))
+			if DEBUG: print "generated SID:", self.SID
+		urllib2._opener.addheaders = []
+		
+		request = urllib2.Request(addr, headers={'x-dsi-sid': self.SID})		
+		
 		resp = urllib2.urlopen(request)
 		
 		data = resp.read()
